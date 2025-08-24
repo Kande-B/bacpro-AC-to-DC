@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Courant Alternatif/Continu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #000066, #0066cc, #00cc00, #cccc00, #cc0000);
+            color: #333;
+            line-height: 1.6;
+            background-size: 200% 200%;
+            animation: wavePulse 12s ease infinite;
+        }
+        @keyframes wavePulse {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 51, 102, 0.8);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid #ffcc00;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+        }
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        nav {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px dashed #00cc00;
+        }
+        nav a {
+            margin: 0 20px;
+            text-decoration: none;
+            color: #003366;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: background 0.3s, color 0.3s;
+            background: linear-gradient(45deg, #000066, #ffcc00);
+            color: white;
+        }
+        nav a:hover {
+            background: linear-gradient(45deg, #ffcc00, #00cc00);
+            color: #003366;
+        }
+        section {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+            border: 1px solid #ffcc00;
+            position: relative;
+            overflow: hidden;
+        }
+        section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.1) 0%, transparent 70%);
+            animation: wave 10s linear infinite;
+            z-index: 0;
+        }
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        section:hover {
+            transform: translateY(-5px);
+        }
+        section > * {
+            position: relative;
+            z-index: 1;
+        }
+        h2 {
+            color: #003366;
+            font-size: 1.8em;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #00cc00;
+        }
+        h3 {
+            color: #ffcc00;
+            margin-top: 30px;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: square;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        iframe {
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #ffcc00;
+            border-radius: 8px;
+            max-width: 100%;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+        a[target="_blank"] {
+            color: #00cc00;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a[target="_blank"]:hover {
+            color: #ffcc00;
+            text-decoration: underline;
+        }
+        .quiz {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ffcc00;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+        }
+        .quiz label {
+            display: block;
+            margin: 10px 0;
+        }
+        .quiz button {
+            background: linear-gradient(45deg, #000066, #ffcc00);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .quiz button:hover {
+            background: linear-gradient(45deg, #ffcc00, #00cc00);
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .checklist {
+            background: rgba(240, 248, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #00cc00;
+            margin-top: 30px;
+            box-shadow: 0 0 10px rgba(0, 204, 0, 0.2);
+        }
+        .checklist label {
+            display: block;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        .summary {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-left: 4px solid #ffcc00;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 51, 102, 0.8);
+            color: white;
+            margin-top: 40px;
+            border-top: 2px solid #ffcc00;
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8em; }
+            nav a { display: inline-block; margin: 10px; }
+            section { margin: 20px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Conversion Courant Alternatif/Continu</h1>
+        <p>Un site éducatif conforme au programme Bac Pro avec récapitulatifs, quizzes et exploration des transformations électriques.</p>
+    </header>
+    
+    <nav>
+        <a href="#section1">Courant Continu vers Alternatif</a>
+        <a href="#section2">Courant Alternatif vers Continu</a>
+    </nav>
+    
+    <section id="section1">
+        <h2>Obtenir un courant alternatif à partir d’un courant continu</h2>
+        <p>Conformément au programme, cette section explore la conversion d’un courant continu (CC) en courant alternatif (CA) à l’aide d’un onduleur. Cette transformation est essentielle dans les applications comme les systèmes solaires ou les alimentations d’urgence.</p>
+        <h3>Étapes expérimentales :</h3>
+        <ul>
+            <li>Utilisez une source de courant continu (batterie ou alimentation).</li>
+            <li>Connectez un onduleur pour convertir le CC en CA.</li>
+            <li>Mesurez la tension et la fréquence du courant alternatif obtenu avec un oscilloscope.</li>
+            <li>Comparez les formes d’onde avant et après conversion.</li>
+        </ul>
+        <p>Vidéo illustrant la conversion CC vers CA :</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lUbjzAIlcJc?si=WcJn7Ryx6K7hV7Nn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>        
+        <h3>Récapitulatif du cours</h3>
+        <div class="summary">
+            Le courant continu (CC) est un flux d’électricité unidirectionnel, tandis que le courant alternatif (CA) oscille périodiquement. Un onduleur utilise des transistors ou des circuits électroniques pour inverser le CC en CA, souvent à une fréquence de 50 Hz ou 60 Hz. Cette conversion est cruciale pour alimenter des appareils domestiques ou des réseaux électriques.
+        </div>
+        
+        <h3>Quiz Progressif : Testez vos connaissances</h3>
+        <p>Questions progressives : faciles, moyennes, difficiles.</p>
+        <div class="quiz">
+            <form id="quiz1">
+                <p>1. (Facile) Quel appareil convertit le courant continu en alternatif ?</p>
+                <label><input type="radio" name="q1" value="a"> Un transformateur</label>
+                <label><input type="radio" name="q1" value="b"> Un onduleur</label>
+                <label><input type="radio" name="q1" value="c"> Un redresseur</label>
+                
+                <p>2. (Facile) Quelle est la fréquence typique d’un courant alternatif en France ?</p>
+                <label><input type="radio" name="q2" value="a"> 50 Hz</label>
+                <label><input type="radio" name="q2" value="b"> 100 Hz</label>
+                <label><input type="radio" name="q2" value="c"> 25 Hz</label>
+                
+                <p>3. (Moyen) Quel composant principal est utilisé dans un onduleur ?</p>
+                <label><input type="radio" name="q3" value="a"> Une diode</label>
+                <label><input type="radio" name="q3" value="b"> Un transistor</label>
+                <label><input type="radio" name="q3" value="c"> Une résistance</label>
+                
+                <p>4. (Moyen) Pourquoi convertir le CC en CA dans un système solaire ?</p>
+                <label><input type="radio" name="q4" value="a"> Pour augmenter la tension</label>
+                <label><input type="radio" name="q4" value="b"> Pour alimenter le réseau domestique</label>
+                <label><input type="radio" name="q4" value="c"> Pour réduire la consommation</label>
+                
+                <p>5. (Difficile) Expliquez le principe de fonctionnement d’un onduleur (réponse ouverte).</p>
+                <textarea name="q5" rows="3" placeholder="Votre réponse..."></textarea>
+                
+                <button type="button" onclick="checkQuiz1()">Soumettre</button>
+            </form>
+            <div id="result1" class="result"></div>
+        </div>
+        
+        <div class="checklist">
+            <h3>Auto-évaluation des compétences</h3>
+            <p>Cochez les compétences que vous jugez acquises :</p>
+            <label><input type="checkbox"> Identifier les différences entre courant continu et alternatif.</label>
+            <label><input type="checkbox"> Utiliser un onduleur pour convertir le CC en CA.</label>
+            <label><input type="checkbox"> Mesurer les caractéristiques d’un courant alternatif avec un oscilloscope.</label>
+            <label><input type="checkbox"> Comprendre l’application des onduleurs dans les systèmes énergétiques.</label>
+        </div>
+    </section>
+    
+    <section id="section2">
+        <h2>Obtenir un courant continu à partir d’un courant alternatif</h2>
+        <p>Conformément au programme, cette section traite de la conversion d’un courant alternatif (CA) en courant continu (CC) à l’aide d’un redresseur, un procédé clé pour alimenter des appareils électroniques.</p>
+        <h3>Étapes expérimentales :</h3>
+        <ul>
+            <li>Utilisez une source de courant alternatif (réseau ou générateur).</li>
+            <li>Connectez un redresseur (pont de diodes) pour convertir le CA en CC.</li>
+            <li>Ajoutez un condensateur pour lisser la tension, si nécessaire.</li>
+            <li>Mesurez la tension continue avec un multimètre.</li>
+        </ul>
+        <p>Vidéo illustrant la conversion CA vers CC :</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZHtgLiMge8w?si=nUGvnYXV8dpRu0WN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>        
+        <h3>Récapitulatif du cours</h3>
+        <div class="summary">
+            La conversion du courant alternatif (CA) en courant continu (CC) utilise un redresseur, souvent un pont de diodes, qui transforme les oscillations en une tension unidirectionnelle. Un condensateur peut être ajouté pour réduire les ondulations, rendant le courant plus stable. Cette technique est essentielle pour alimenter des circuits électroniques comme les chargeurs ou les alimentations PC.
+        </div>
+        
+        <h3>Quiz Progressif : Testez vos connaissances</h3>
+        <p>Questions progressives : faciles, moyennes, difficiles.</p>
+        <div class="quiz">
+            <form id="quiz2">
+                <p>1. (Facile) Quel appareil convertit le courant alternatif en continu ?</p>
+                <label><input type="radio" name="q1" value="a"> Un onduleur</label>
+                <label><input type="radio" name="q1" value="b"> Un redresseur</label>
+                <label><input type="radio" name="q1" value="c"> Un transformateur</label>
+                
+                <p>2. (Facile) Quel composant est utilisé pour redresser le courant ?</p>
+                <label><input type="radio" name="q2" value="a"> Une diode</label>
+                <label><input type="radio" name="q2" value="b"> Un condensateur</label>
+                <label><input type="radio" name="q2" value="c"> Une résistance</label>
+                
+                <p>3. (Moyen) Quel est l’effet d’un condensateur dans un redresseur ?</p>
+                <label><input type="radio" name="q3" value="a"> Il augmente la fréquence</label>
+                <label><input type="radio" name="q3" value="b"> Il lisse la tension</label>
+                <label><input type="radio" name="q3" value="c"> Il inverse le courant</label>
+                
+                <p>4. (Moyen) Dans quel appareil trouve-t-on un redresseur ?</p>
+                <label><input type="radio" name="q4" value="a"> Une lampe</label>
+                <label><input type="radio" name="q4" value="b"> Un chargeur de téléphone</label>
+                <label><input type="radio" name="q4" value="c"> Un ventilateur</label>
+                
+                <p>5. (Difficile) Décrivez le fonctionnement d’un pont de diodes dans un redresseur (réponse ouverte).</p>
+                <textarea name="q5" rows="3" placeholder="Votre réponse..."></textarea>
+                
+                <button type="button" onclick="checkQuiz2()">Soumettre</button>
+            </form>
+            <div id="result2" class="result"></div>
+        </div>
+        
+        <div class="checklist">
+            <h3>Auto-évaluation des compétences</h3>
+            <p>Cochez les compétences que vous jugez acquises :</p>
+            <label><input type="checkbox"> Identifier les différences entre courant continu et alternatif.</label>
+            <label><input type="checkbox"> Utiliser un redresseur pour convertir le CA en CC.</label>
+            <label><input type="checkbox"> Mesurer la tension continue avec un multimètre.</label>
+            <label><input type="checkbox"> Comprendre le rôle d’un condensateur dans le lissage de la tension.</label>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Site créé pour les élèves de Bac Pro. Conforme au programme officiel 2025. Sources : YouTube et ressources éducatives.</p>
+    </footer>
+
+    <script>
+        function checkQuiz1() {
+            const form = document.getElementById('quiz1');
+            const result = document.getElementById('result1');
+            let score = 0;
+            let feedback = '';
+            
+            const q1 = form.q1.value;
+            if (q1 === 'b') { score += 2; feedback += '<p style="color:green;">Question 1 : Correct ! (+2 points)</p>'; }
+            else { feedback += '<p style="color:red;">Question 1 : Incorrect. La bonne réponse est : Un onduleur. (0 point)</p>'; }
+            
+            const q2 = form.q2.value;
+            if (q2 === 'a') { score += 2; feedback += '<p style="color:green;">Question 2 : Correct ! (+2 points)</p>'; }
+            else { feedback += '<p style="color:red;">Question 2 : Incorrect. La bonne réponse est : 50 Hz. (0 point)</p>'; }
+            
+            const q3 = form.q3.value;
+            if (q3 === 'b') { score += 3; feedback += '<p style="color:green;">Question 3 : Correct ! (+3 points)</p>'; }
+            else { feedback += '<p style="color:red;">Question 3 : Incorrect. La bonne réponse est : Un transistor. (0 point)</p>'; }
+            
+            const q4 = form.q4.value;
+            if (q4 === 'b') { score += 3; feedback += '<p style="color:green;">Question 4 : Correct ! (+3 points)</p>'; }
+            else { feedback += '<p style="color:red;">Question 4 : Incorrect. La bonne réponse est : Pour alimenter le réseau domestique. (0 point)</p>'; }
+            
+            const q5 = form.q5.value.trim().toLowerCase();
+            if (q5.includes('transistor') || q5.includes('inverser') || q5.includes('oscillation')) {
+                score += 5; feedback += '<p style="color:green;">Question 5 : Bonne réponse ! (+5 points)</p>';
+            } else {
+                feedback += '<p style="color:red;">Question 5 : À améliorer. Un onduleur inverse le CC en CA via des transistors. (0 point)</p>';
+            }
+            
+            feedback += `<p style="color:#ffcc00;">Score total : ${score}/15</p>`;
+            result.innerHTML = feedback;
+        }
+
+        function checkQuiz2() {
+            const form = document.getElementById('quiz2');
+            const result = document.getElementById('result2');
+            let score = 0;
+            let feedback = '';
+            
+            const q1 = form.q1.value;
+            if (q1 === 'b') { score += 2; feedback += '<p style="color:green;">Question 1 : Correct ! (+2 points)</p>'; }
+            else { feedback += '<p style="color:red;">Question 1 : Incorrect. La bonne réponse est : Un redresseur. (0 point)</p>'; }
+            
+            const q2 = form.q2.value;
+            if (q2 === 'a') { score += 2; feedback += '<p style="color:green;">Question 2 : Correct ! (+2 points)</p>'; }
+            else { feedback += '<p style="color:red;">Question 2 : Incorrect. La bonne réponse est : Une diode. (0 point)</p>'; }
+            
+            const q3 = form.q3.value;
+            if (q3 === 'b') { score += 3; feedback += '<p style="color:green;">Question 3 : Correct ! (+3 points)</p>'; }
+            else { feedback += '<p style="color:red;">Question 3 : Incorrect. La bonne réponse est : Il lisse la tension. (0 point)</p>'; }
+            
+            const q4 = form.q4.value;
+            if (q4 === 'b') { score += 3; feedback += '<p style="color:green;">Question 4 : Correct ! (+3 points)</p>'; }
+            else { feedback += '<p style="color:red;">Question 4 : Incorrect. La bonne réponse est : Un chargeur de téléphone. (0 point)</p>'; }
+            
+            const q5 = form.q5.value.trim().toLowerCase();
+            if (q5.includes('pont') || q5.includes('diodes') || q5.includes('redressement')) {
+                score += 5; feedback += '<p style="color:green;">Question 5 : Bonne réponse ! (+5 points)</p>';
+            } else {
+                feedback += '<p style="color:red;">Question 5 : À améliorer. Un pont de diodes redresse le CA en CC via un circuit à quatre diodes. (0 point)</p>';
+            }
+            
+            feedback += `<p style="color:#ffcc00;">Score total : ${score}/15</p>`;
+            result.innerHTML = feedback;
+        }
+    </script>
+</body>
+</html>
